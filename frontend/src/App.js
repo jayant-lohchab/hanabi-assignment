@@ -13,18 +13,32 @@ function App() {
   });
   const submitUserNameHandler = (userNamew) => {
     setUserData({ ...userData, userName: userNamew });
-    console.log(userData);
     setStep(2);
   };
-  const submitFormHandler = (formData) => {
+  const submitFormHandler = async (formData) => {
     setUserData({
       ...userData,
-      number: formData.number,
+      number: +formData.number,
       email: formData.email,
       name: formData.name,
       birth: formData.birth,
     });
     setStep(3);
+    const response = await fetch(
+      "https://hanabi-assignment-default-rtdb.firebaseio.com/users.json",
+      { method: "POST",
+        body:JSON.stringify({
+          userName: userData.userName,
+          number: +formData.number,
+          email: formData.email,
+          name: formData.name,
+          birth: formData.birth,
+        })
+    }
+    );
+    if(!response.ok){
+      throw new Error("The sending data failed");
+    }
   };
   const cancelFormHandler = () => {
     setUserData({
@@ -43,6 +57,7 @@ function App() {
         <StepTwo
           onFormSubmit={submitFormHandler}
           onCancel={cancelFormHandler}
+          forUser={userData.userName}
         />
       )}
       {step === 3 && (

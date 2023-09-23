@@ -21,6 +21,7 @@ const StepOne = (props) => {
         onChange={userNameHandler}
         placeholder="Enter User-Name"
         className={styles.inputField}
+        required
       />
       <button onClick={userNameSubmitHandler} className={styles.submitButton}>
         Submit

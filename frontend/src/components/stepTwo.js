@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./StepTwo.module.css"; // Import your CSS module
 
 const StepTwo = (props) => {
@@ -8,6 +8,42 @@ const StepTwo = (props) => {
     name: "",
     birth: "",
   });
+
+  useEffect(() => {
+    const preFillForm = async () => {
+      const response = await fetch(
+        "https://hanabi-assignment-default-rtdb.firebaseio.com/users.json",
+        { method: "GET" }
+      );
+      if (!response.ok) {
+          throw new Error("getting user info failed");
+        }
+        const dataList = await response.json();
+       if(!dataList){
+        console.log("the list was empty");
+       }
+        else {
+        const dataArray = Object.values(dataList);
+        const reqData = dataArray.find(
+          (data) => data.userName === props.forUser
+        );
+        if(!reqData){
+            console.log("new user");
+        }
+        else{
+            setFormData({
+              ...formData,
+              number: reqData.number,
+              email: reqData.email,
+              name: reqData.name,
+              birth: reqData.birth,
+            });
+
+        }
+      }
+    };
+    preFillForm();
+  },[]);
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -33,6 +69,8 @@ const StepTwo = (props) => {
           placeholder="Phone Number"
           onChange={inputChangeHandler}
           className={styles.inputField}
+          value={formData.number}
+          required
         />
         <input
           type="text"
@@ -40,6 +78,8 @@ const StepTwo = (props) => {
           placeholder="Email Address"
           onChange={inputChangeHandler}
           className={styles.inputField}
+          value={formData.email}
+          required
         />
         <input
           type="text"
@@ -47,13 +87,17 @@ const StepTwo = (props) => {
           placeholder="Your Full Name"
           onChange={inputChangeHandler}
           className={styles.inputField}
+          value={formData.name}
+          required
         />
         <input
-          type="date"
+          type="text"
           name="birth"
           placeholder="Date of Birth"
           onChange={inputChangeHandler}
           className={styles.inputField}
+          value={formData.birth}
+          required
         />
         <div className={styles.buttonContainer}>
           <button type="submit" className={styles.submitButton}>
