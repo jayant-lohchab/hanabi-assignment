@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
-
+import StepOne from "./components/stepOne";
+import StepTwo from "./components/stepTwo";
+import StepThree from "./components/stepThree";
+import { useState } from "react";
 function App() {
+  const [step, setStep] = useState(1);
+  const [userData, setUserData] = useState({
+    userName: "",
+    number: "",
+    email: "",
+    name: "",
+    birth: "",
+  });
+  const submitUserNameHandler = (userNamew) => {
+    setUserData({ ...userData, userName: userNamew });
+    console.log(userData);
+    setStep(2);
+  };
+  const submitFormHandler = (formData) => {
+    setUserData({
+      ...userData,
+      number: formData.number,
+      email: formData.email,
+      name: formData.name,
+      birth: formData.birth,
+    });
+    setStep(3);
+  };
+  const cancelFormHandler = () => {
+    setUserData({
+      userName: "",
+      number: "",
+      email: "",
+      name: "",
+      birth: "",
+    });
+    setStep(1);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {step === 1 && <StepOne onUserNameSubmit={submitUserNameHandler} />}
+      {step === 2 && (
+        <StepTwo
+          onFormSubmit={submitFormHandler}
+          onCancel={cancelFormHandler}
+        />
+      )}
+      {step === 3 && (
+        <StepThree userData={userData} onNavigate={() => setStep(1)} />
+      )}
     </div>
   );
 }

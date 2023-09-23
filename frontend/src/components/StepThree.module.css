@@ -1,0 +1,66 @@
+/* Container for the entire component */
+.stepThreeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  /* Title styling */
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Result box styling */
+  .resultBox {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+  }
+  
+  /* Success message styling */
+  .successMessage {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #009900;
+  }
+  
+  /* User data styling */
+  .userData {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Button container */
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Return button styling */
+  .returnButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    /* Add a hover effect */
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+  
