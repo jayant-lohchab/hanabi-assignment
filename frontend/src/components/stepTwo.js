@@ -24,6 +24,7 @@ const StepTwo = (props) => {
        }
         else {
         const dataArray = Object.values(dataList);
+        dataArray.reverse();
         const reqData = dataArray.find(
           (data) => data.userName === props.forUser
         );
